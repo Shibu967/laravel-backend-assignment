@@ -1,59 +1,113 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# Product Management System (Laravel)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Overview
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+This is a **backend-focused Laravel application** built to demonstrate:
 
-## Learning Laravel
+* Multi-authentication (Admin & Customer)
+* Real-time updates using WebSockets
+* Large-scale **CSV product import** using queues
+* Clean and maintainable backend architecture
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+The UI is minimal and focuses only on demonstrating backend functionality.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## Features
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+* Separate authentication for **Admin** and **Customer**
+* Admin dashboard for product and category management
+* Product CRUD operations
+* **Bulk CSV import** (up to 100,000 products)
+* Queue-based background processing
+* Real-time user online/offline status using WebSockets
+* Feature tests for core functionality
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Technology Stack
 
-## Contributing
+* Laravel 12
+* PHP 8.2+
+* MySQL / SQLite
+* Laravel Queues
+* Laravel Reverb (WebSockets)
+* Laravel Excel (CSV processing)
+* Blade (minimal UI)
+* PHPUnit (testing)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## Bulk Product Import (CSV Only)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+* Supports CSV file upload
+* Processes records using chunk reading
+* Each row is validated before import
+* Uses queues to prevent timeouts
+* Default product image is assigned if missing
+* Sample CSV file included:
 
-## Security Vulnerabilities
+```
+products_sample_import.csv
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## Real-Time Features
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+* Real-time user presence using WebSockets
+* Presence channels for Admin and Customer users
+* Online/offline status stored in database
+* No AJAX polling used
+
+---
+
+## Testing
+
+* Includes feature tests for key flows (e.g. product creation)
+* Run tests using:
+
+```bash
+php artisan test
+```
+
+---
+
+## Setup Instructions
+
+```bash
+git clone <repository-url>
+cd project-directory
+composer install
+
+cp .env.example .env
+php artisan key:generate
+
+npm install
+npm run dev
+
+php artisan migrate
+php artisan db:seed
+
+php artisan queue:work --timeout=120 --tries=3
+php artisan install:broadcasting --reverb
+php artisan reverb:start
+php artisan serve
+```
+
+Update `.env` with database and broadcasting configuration.
+
+---
+
+## Architecture Notes
+
+* Multi-authentication implemented using Laravel guards
+* Queue-based CSV imports improve performance
+* WebSockets enable real-time updates
+* Repository pattern used for cleaner data access
+* Codebase follows clean and readable structure
+
+
